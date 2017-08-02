@@ -1,0 +1,987 @@
+syntax = "proto2";
+
+package shooter;
+
+option java_package = "com.youhujia.shooter.objects";
+option java_outer_classname = "Shooter";
+
+message Result {
+    optional bool success = 1;
+    optional int64 code = 2;
+    optional string msg = 3;
+    optional string displaymsg = 4;
+    optional string resetToken = 5;
+}
+
+//----------login--------------
+message LoginOption{
+    optional string phone = 1;
+    optional string captcha = 2;
+}
+message LoginDTO{
+    message User {
+        optional int64 userId = 1;
+        optional string name = 2;
+        optional int64 birthday = 3;
+        optional int64 gender = 4;
+        optional string phone = 5;
+        optional string token = 6;
+        optional string avatar = 7;
+    }
+    message Data {
+        optional bool isNew = 1;
+        optional User user = 2;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+
+message ScanQRCodeOption{
+    optional string qrcode = 1;
+}
+message ScanQRCodeDTO{
+    message Department {
+        optional int64 departmentId = 1;
+        optional string departmentName = 2;
+        optional int64 organizationId = 3;
+        optional string organizationName = 4;
+        optional string bannerUrl = 5;
+    }
+    message Data {
+        optional Department department = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+message ClientInfoOption{
+    optional string cid = 1;
+}
+
+
+//----------v2.0---------------
+message ADDDepartmentDiseaseOption {
+    optional string openId = 1;
+    optional int64 departmentId = 2;
+}
+
+//-------begin register-------
+message RegisterOption {
+    optional string name = 1;
+    optional int64 birthday = 2;
+    optional int64 gender = 3;
+    optional string phone = 4;
+    optional string captcha = 5;
+}
+
+message RegisterDTO {
+    message User {
+        optional int64 userId = 1;
+        optional string name = 2;
+        optional int64 birthday = 3;
+        optional int64 gender = 4;
+        optional string phone = 5;
+        optional string token = 6;
+        optional string avatar = 7;
+    }
+    message Data {
+        optional User user = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+//-------end register-------
+
+//----------begin component------------
+message Component {
+    optional int64 componentId = 1;
+    optional string type = 2;
+    optional int64 rank = 3;
+}
+
+//---------begin home ------------
+message CHomeLoadDTO {
+    message Banner {
+        optional int64 id = 1;
+        optional string type = 2;
+        optional string name = 3;
+        optional string brief = 4;
+        optional string bannerUrl = 5;
+    }
+    message Department {
+        optional int64 departmentId = 1;
+        optional string departmentName = 2;
+        optional int64 organizationId = 3;
+        optional string organizationName = 4;
+        optional string bannerUrl = 5;
+    }
+    message LoadInfoData {
+        repeated Banner banner = 1;
+        optional Department latestDepartment = 2;
+        repeated Component component = 3;
+    }
+    message Data {
+        optional LoadInfoData loadinfo = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+
+message CHomeFollowedDiseaseDTO {
+    message Disease {
+        optional int64 diseaseId = 1;
+        optional string diseaseName = 2;
+        optional string iconColor = 3;
+        optional string icon = 4;
+    }
+    message DiseaseComponentData {
+        optional string title = 1;
+        repeated Disease disease = 2;
+    }
+    message Data {
+        optional DiseaseComponentData component = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+
+message CHomeSelfEvaluationDTO {
+    message Group {
+        message Evaluation {
+            optional string evaluationId = 1;
+            optional string evaluationName = 2;
+            optional string iconColor = 3;
+            optional string icon = 4;
+        }
+        optional int64 departmentId = 1;
+        optional string organizationName = 2;
+        optional string departmentName = 3;
+        repeated Evaluation evaluation = 4;
+    }
+    message EvaluationComponentData {
+        optional string title = 1;
+        repeated Group evaluationGroup = 2;
+    }
+    message Data {
+        optional EvaluationComponentData component = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+
+message CHomeItemDTO {
+    message Group {
+        message Item {
+            optional int64 itemId = 1;
+            optional string title = 2;
+            optional int64 price = 3;
+            optional string desc = 4;
+            optional string pic = 5;
+        }
+        optional string organizationName = 1;
+        optional string departmentName = 2;
+        optional string departmentNo = 3;
+        optional Item item = 4;
+    }
+    message ItemComponentData {
+        optional string title = 1;
+        repeated Group itemGroup = 2;
+    }
+    message Data {
+        optional ItemComponentData component = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+//----------end home------------
+
+//---------begin department--------
+message CDepartmentLoadDTO {
+    message Department {
+        optional int64 departmentId = 1;
+        optional string departmentName = 2;
+        optional string departmentNo = 3;
+        optional int64 organizationId = 4;
+        optional string organizationName = 5;
+        optional string bannerUrl = 6;
+    }
+    message LoadInfoData {
+        optional Department department = 1;
+        repeated Component component = 2;
+    }
+    message Data {
+        optional LoadInfoData loadinfo = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+
+message CDepartmentArticleGroupDTO {
+    message ArticleGroup {
+        optional int64 articleGroupId = 1;
+        optional string articleGroupName = 2;
+        optional string iconColor = 3;
+        optional string icon = 4;
+    }
+    message ArticleComponentData {
+        optional string title = 1;
+        repeated ArticleGroup articleGroup = 2;
+    }
+    message Data {
+        optional ArticleComponentData component = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+
+message CSelfEvaluationDTO {
+    message Evaluation {
+        optional string evaluationId = 1;
+        optional string evaluationName = 2;
+        optional string iconColor = 3;
+        optional string icon = 4;
+    }
+    message EvaluationComponentData {
+        optional string title = 1;
+        repeated Evaluation evaluation = 2;
+    }
+    message Data {
+        optional EvaluationComponentData component = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+
+message CDepartmentItemDTO {
+    message Item {
+        optional int64 itemId = 1;
+        optional string title = 2;
+        optional int64 price = 3;
+        optional string desc = 4;
+        optional string pic = 5;
+    }
+    message ItemComponentData {
+        optional string title = 1;
+        repeated Item item = 2;
+    }
+    message Data {
+        optional ItemComponentData component = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+
+message CRecommendedDTO {
+    message Recommendation {
+        optional int64 articleId = 1;
+        optional string name = 2;
+        optional string brief = 3;
+        optional string bannerUrl = 4;
+        optional bool read = 5;
+    }
+    message RecommendationComponentData {
+        optional string title = 1;
+        repeated Recommendation recommended = 2;
+    }
+    message Data {
+        optional RecommendationComponentData component = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+//---------end department--------
+//----------end component------------
+
+//---------begin article --------
+message ArticleListDTO {
+    message Article {
+        optional int64 articleId = 1;
+        optional string name = 2;
+        optional string brief = 3;
+        optional string bannerUrl = 6;
+    }
+    message Data {
+        repeated Article article = 1;
+        optional string articleListTitle = 2;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+
+message ArticleDTO {
+    message Article {
+        optional int64 articleId = 1;
+        optional string name = 2;
+        optional string brief = 3;
+        optional string author = 4;
+        optional string content = 5;
+        optional string bannerUrl = 6;
+        optional int64 categoryId = 7;
+        optional string categoryName = 8;
+        optional string classType = 9;
+        optional int64 likeCount = 10;
+        optional bool liked = 11;
+        optional bool favored = 12;
+        optional bool read = 13;
+    }
+    message Data {
+        optional Article article = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+
+message ArticleOperateOption {
+    optional string type = 1;
+}
+//---------end article --------
+
+//--------begin user-------------
+message FollowedDepartmentDTO {
+    message Suggest {
+        optional string id = 1;
+        optional string type = 2;
+        optional string iconColor = 3;
+        optional string icon = 4;
+        optional string title = 5;
+    }
+    message Department {
+        optional int64 departmentId = 1;
+        optional string departmentName = 2;
+        optional string departmentNo = 3;
+        optional int64 organizationId = 4;
+        optional string organizationName = 5;
+        optional string bannerUrl = 6;
+        optional Suggest suggest = 7;
+    }
+    message FollowedDepartmentData {
+        optional Component component = 1;
+        repeated Department department = 2;
+    }
+    message Data {
+        optional FollowedDepartmentData followedDepartment = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+
+message UserDTO {
+    message User {
+        optional int64 userId = 1;
+        optional string userName = 2;
+        optional string avatar = 3;
+        optional int64 gender = 4;
+        optional int64 age = 5;
+        optional string phone = 6;
+    }
+    message Data {
+        optional User user = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+
+message FollowedDiseaseDTO {
+    message Disease {
+        optional int64 diseaseId = 1;
+        optional string diseaseName = 2;
+        optional string iconColor = 3;
+        optional string icon = 4;
+    }
+    message Data {
+        repeated Disease disease = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+
+message FollowedDiseaseOption {
+    repeated int64 disease = 1;
+}
+
+message OrderListDTO {
+    message Item {
+        optional string title = 1;
+        optional int64 price = 2;
+        optional string pic = 3;
+        optional int64 period = 4;
+        optional string desc = 5;
+        optional string serviceDetail = 6;
+    }
+    message Order {
+        optional int64 orderId = 1;
+        optional string orderNo = 2;
+        optional int64 createTime = 3;
+        optional string organizationName = 4;
+        optional string departmentName = 5;
+        optional string departmentNo = 6;
+        optional Item item = 7;
+        optional UserAddress patient = 8;
+        optional OrderStatus status = 9;
+    }
+    message Data {
+        repeated Order order = 2;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+
+message RecordListDTO {
+    message Record {
+        optional int64 id = 1;
+        optional int64 date = 2;
+        optional string type = 3;
+        optional string title = 4;
+        optional string departmentName = 5;
+        optional string organizationName = 6;
+        optional string status = 7;
+        optional string icon = 8;
+        optional string iconColor = 9;
+    }
+    message Data {
+        repeated Record record = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+
+message FollowUpDTO {
+    message Event {
+        optional int64 id = 1;
+        optional string title = 2;
+        optional int64 date = 3;
+        optional string purpose = 4;
+        optional string status = 5;
+        message Article {
+            optional int64 id = 1;
+            optional string title = 2;
+            optional bool read = 3;
+        }
+        message Tool {
+            optional string id = 1;
+            optional string title = 2;
+            optional string iconColor = 3;
+            optional string icon = 4;
+            optional string status = 5;
+            optional int64 recordId = 6;
+        }
+
+        repeated Article article = 6;
+        repeated Tool tool = 7;
+    }
+    message Nurse {
+        optional int64 nurseId = 1;
+        optional string name = 2;
+        optional string avatar = 3;
+        optional string title = 4;
+        optional string departmentName = 5;
+        optional string organizationName = 6;
+        optional bool chat = 7;
+        optional int64 departmentId = 8;
+        optional int64 organizationId = 9;
+    }
+    message FollowUpData {
+        optional Event event = 1;
+        repeated Nurse nurse = 2;
+    }
+    message Data {
+        optional FollowUpData followUp = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+message UserChatDTO {
+    message ChatAccount {
+        optional string identifier = 1;
+        optional string signature = 2;
+        optional string avatarUrl = 3;
+        optional string nickname = 4;
+    }
+    message Data {
+        optional ChatAccount chatAccount = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+
+message ChatDTO {
+    message ChatAccount {
+        optional string identifier = 1;
+        optional string signature = 2;
+        optional string avatarUrl = 3;
+        optional string nickname = 4;
+    }
+    message ChatInfo {
+        optional ChatAccount fromAccount = 1;
+        optional ChatAccount toAccount = 2;
+    }
+    message Data {
+        optional ChatInfo chatInfo = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+//------------end user----------
+
+//-----------begin disease-----------
+message DiseaseDTO {
+    message Disease {
+        optional int64 diseaseId = 1;
+        optional string diseaseName = 2;
+        optional bool choosed = 3;
+    }
+    message DiseaseGroup {
+        optional string groupName = 1;
+        repeated Disease disease = 2;
+    }
+    message Data {
+        repeated DiseaseGroup diseaseGroup = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+//-----------end disease-----------
+
+//-----------begin self-evaluation -----------
+message SelfEvaluationDTO {
+    message Question {
+        message SingleChoice {
+            optional string choice = 1;
+            optional int64 order = 2;
+        }
+        message MultiChoice {
+            optional string choice = 1;
+            optional int64 order = 2;
+        }
+        message Completion {
+            optional string content = 1;
+        }
+        message SingleChoiceMatrix {
+            message OptionContent {
+                optional int64 rank = 1;
+                optional string content = 2;
+                repeated string choice = 3;
+            }
+            optional OptionContent optionContent = 1;
+        }
+        optional string questionType = 1;
+        optional string questionContent = 2;
+        optional string questionDesc = 3;
+        repeated string questionDescPicUrl = 4;
+        repeated SingleChoice singleChoice = 5;
+        repeated MultiChoice multiChoice = 6;
+        repeated Completion completion = 7;
+        repeated SingleChoiceMatrix singleChoiceMatrix = 8;
+        optional int64 order = 9;
+    }
+    message SelfEvaluation {
+        optional string evaluationId = 1;
+        optional string evaluationName = 2;
+        optional string iconColor = 3;
+        optional string icon = 4;
+        repeated Question question = 5;
+    }
+    message Data {
+        optional SelfEvaluation evaluation = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+
+}
+
+message SelfEvaluationSubmitOption {
+    message Answer {
+        optional int64 order = 1;
+        repeated string content = 2;
+    }
+    repeated Answer answer = 1;
+}
+
+message SelfEvaluationResultDTO {
+    message QuestionAnswer {
+        message SingleChoice {
+            optional string choice = 1;
+        }
+
+        message MultiChoice {
+            optional string choice = 1;
+        }
+
+        message Completion {
+            optional string content = 1;
+            optional string format = 2;
+        }
+        message SingleChoiceMatrix {
+            message OptionContent {
+                optional int64 rank = 1;
+                optional string content = 2;
+                repeated string choice = 3;
+            }
+            optional OptionContent optionContent = 1;
+        }
+        optional string questionType = 1;
+        optional string questionContent = 2;
+        optional string questionDesc = 3;
+        repeated string questionDescPicUrl = 4;
+        repeated SingleChoice singleChoice = 5;
+        repeated MultiChoice multiChoice = 6;
+        repeated Completion completion = 7;
+        repeated SingleChoiceMatrix singleChoiceMatrix = 8;
+        optional int64 order = 9;
+    }
+    message SelfEvaluation {
+        optional int64 recordId = 1;
+        optional int64 submitorId = 2;
+        optional int64 submitorType = 3;
+        optional int64 departmentId = 4;
+        optional string departmentName = 5;
+        optional int64 organizationId = 6;
+        optional string organizationName = 7;
+        optional string evaluationName = 8;
+        optional string conclusion = 9;
+        repeated QuestionAnswer answer = 10;
+        optional string iconColor = 11;
+        optional string icon = 12;
+        optional int64 updatedAt = 13;
+    }
+    message Data {
+        optional SelfEvaluation evaluation = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+//-----------begin self-evaluation -----------
+
+message NurseListDTO {
+    message Nurse {
+        optional int64 nurseId = 1;
+        optional string name = 2;
+        optional string avatar = 3;
+        optional string identifier = 4;
+    }
+    message ChatGroup {
+        optional string groupId = 1;
+        optional string name = 2;
+        optional int64 departmentId = 3;
+    }
+    message Data {
+        repeated Nurse nurse = 1;
+        repeated ChatGroup chatGroup = 2;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+
+//----------v1.0---------------
+message CommonErrorResult {
+    optional Result result = 1;
+}
+
+message ItemDetailDTO {
+    optional Result result = 1;
+    optional Item item = 2;
+}
+
+message ItemListDTO {
+    optional Result result = 1;
+    repeated Item item = 2;
+    optional string bannerURL = 3;
+    optional string desc = 4;
+}
+
+message Item {
+    optional int64 itemId = 1;
+    optional string title = 2;
+    optional int64 price = 3;
+    optional string desc = 4;
+    optional string serviceDetail = 5;
+    optional string pic = 6;
+    optional int64 period = 7;
+    message Action {
+        optional string title = 1;
+        optional string desc = 2;
+        optional int64 order = 3;
+        optional int64 actionId = 4;
+        optional int64 actionType = 5;
+        message Progress {
+            optional string Msg = 1;
+            optional string color = 2;
+        }
+        message Content {
+            optional string id = 1;
+            optional ActionContent content = 2;
+            message Status {
+                optional string title = 1;
+                message Progress {
+                    optional string buttonMsg = 1;
+                    optional string color = 2;
+                }
+                optional Progress progress = 2;
+            }
+            optional Status status = 3;
+        }
+        optional Progress progress = 6;
+        repeated Content content = 7;
+
+    }
+    repeated Action action = 8;
+
+}
+
+message OrderDetailDTO {
+    optional int64 orderId = 1;
+    optional int64 countdownTime = 2;
+    optional int64 orderTime = 3;
+    optional int64 servingTime = 4;
+
+    message Nurse {
+        optional string avatarUrl = 1;
+        optional string name = 2;
+        optional string hospital = 3;
+        optional string title = 4;
+        optional int64 score = 5;
+    }
+    message AvailableAction {
+        optional string title = 1;
+        optional string action = 2;
+    }
+
+    message RefundDetail {
+        optional string reason = 1;
+        optional int64 price = 2;
+        optional string explain = 3;
+    }
+
+
+    optional Result result = 5;
+    optional Item item = 6;
+    optional Nurse nurse = 7;
+    optional OrderStatus status = 8;
+    optional UserAddress patient = 9;
+    repeated AvailableAction availableAction = 10;
+    optional RefundDetail refundDetail = 11;
+    optional string orderNo = 12;
+    optional int64 payAmount = 13;
+    optional int64 countdownMinutes = 14;
+    repeated UserAddressMsg patientList = 15;
+    optional int64 departmentId = 16;
+    optional string departmentNo = 17;
+
+}
+
+message OrderAddDTO {
+    optional Result result = 1;
+    optional int64 orderId = 2;
+}
+message ActionUpdateDTO {
+    optional Result result = 1;
+}
+message ActionUpdateOption {
+    optional int64 orderId = 1;
+}
+message OrderMsgAddOption {
+    message Item {
+        optional int64 itemId = 1;
+    }
+    optional Item item = 1;
+    optional int64 patientId = 2;
+    optional int64 userAddressId = 3;
+    optional int64 servingTime = 4;
+    optional string notes = 5;
+}
+message OrderRefundAddOption {
+    optional int64 orderId = 1;
+    optional int64 reason = 2;
+    optional int64 price = 3;
+    optional string explain = 4;
+    optional int64 patientId = 5;
+
+}
+message OrderRefundDTO {
+    optional int64 orderId = 1;
+    message Reason {
+        optional int64 id = 1;
+        optional string title = 2;
+    }
+    repeated Reason reason = 2;
+    optional int64 price = 3;
+    optional Result result = 4;
+
+}
+
+message OrderEvaluateAddOption {
+    optional int64 orderId = 1;
+    optional string evaluateContent = 2;
+    optional int64 score = 3;
+    optional int64 patientId = 4;
+
+}
+
+message InitiateChargeResultDTO {
+    optional Result result = 1;
+    optional string chargeJson = 2;
+}
+
+
+message OrderStatus {
+    optional string statusDisplayMsg = 1;
+    optional string statusDescMsg = 2;
+    optional string color = 3;
+    message Content {
+        optional string title = 1;
+        optional string detail = 2;
+    }
+    optional Content content = 4;
+}
+
+message UserAddress {
+    optional string name = 1;
+    optional int64 age = 2;
+    optional string sex = 3;
+    optional string phone = 4;
+    optional string address = 5;
+    optional int64 servingTime = 6;
+
+}
+
+message ActionContent {
+    optional string title = 1;
+    optional string detail = 2;
+}
+
+message ProtocolDTO {
+    optional string content = 1;
+    optional Result result = 2;
+}
+
+message UserAddressDeleteDTO {
+    optional Result result = 1;
+}
+
+message UserAddressUpdateDTO {
+    optional Result result = 1;
+    optional UserAddressMsg patient = 2;
+}
+
+message UserAddressAddDTO {
+    optional Result result = 1;
+    optional UserAddressMsg patient = 2;
+}
+
+message UserAddressUpdateOption {
+    optional int64 userAddressId = 1;
+    optional string name = 2;
+    optional string sex = 3;
+    optional string phone = 4;
+    optional Address address = 5;
+    optional int64 relation = 6;
+    optional int64 birthday = 7;
+    optional int64 userId = 8;
+}
+
+message UserAddressMsg {
+    optional string name = 2;
+    optional string sex = 3;
+    optional int64 birthday = 4;
+    optional string relation = 5;
+    optional string phone = 6;
+    optional Address address = 7;
+    optional int64 userAddressId = 8;
+    optional bool default = 9;
+}
+
+message UserAddressMsgDTO {
+    optional Result result = 1;
+    optional UserAddressMsg patient = 2;
+
+}
+
+message AddUserAddressMsgOption {
+    optional int64 userId = 1;
+    optional string name = 2;
+    optional string sex = 3;
+    optional int64 birthday = 4;
+    optional int64 relation = 5;
+    optional string phone = 6;
+    optional Address address = 7;
+}
+
+
+message RelationDTO {
+    optional Result result = 1;
+    repeated RelationList relationList = 2;
+    message RelationList {
+        optional int64 id = 1;
+        optional string relation = 2;
+    }
+}
+
+message Address {
+    optional string province = 1;
+    optional string city = 2;
+    optional string district = 3;
+    optional string addressDetail = 4;
+}
+
+message ServingTimeDTO {
+    optional string date = 1;
+    optional string weekdays = 2;
+    optional bool choose = 3;
+    message Time {
+        optional bool choose = 1;
+        optional string title = 2;
+        optional int64 detailTime = 3;
+    }
+    repeated Time time = 4;
+}
+
+message TakenInfoDTO {
+    optional Result result = 1;
+    optional Item item = 2;
+    repeated UserAddressMsg patientList = 3;
+    repeated ServingTimeDTO servingTime = 4;
+}
+
+
+message RelatedWikiNode {
+    repeated int64 wikiNodeIds = 1;
+}
+message VirtualDisease {
+    repeated int64 diseaseIdList = 1;
+}
+message WxJsConfigOption {
+    optional string url = 1;
+}
+
+message WxJsConfigDTO {
+    message Config {
+        optional string nonceStr = 1;
+        optional string timestamp = 2;
+        optional string url = 3;
+        optional string signature = 4;
+        optional string appId = 5;
+    }
+    message Data {
+        optional Config config = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
+
+// add new type for C-end department
+message CArticleListDTO {
+    message Article {
+        optional int64 id = 1;
+        optional string title = 2;
+        optional string brief = 3;
+        optional string bannerUrl = 4;
+    }
+    message ArticleListComponentData {
+        optional string title = 1;
+        repeated Article article = 2;
+    }
+    message Data {
+        optional ArticleListComponentData component = 1;
+    }
+    optional Result result = 1;
+    optional Data data = 2;
+}
