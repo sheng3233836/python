@@ -20,7 +20,8 @@ def load_page(book_url, chapter_url):
     response = requests.get(url)
     content = str(response.content, "utf-8")
     # 正则表达式
-    text_pattern = re.compile('<div id="content">.*?<!--go-->(.*?)<!--over-->.*?</div>', re.S)
+    # text_pattern = re.compile('<div id="content">.*?<!--go-->(.*?)<!--over-->.*?</div>', re.S)
+    text_pattern = re.compile('<div id="content">(.*?)</div>', re.S)
     title_pattern = re.compile('<div class="bookname">.*?<h1>(.*?)</h1>.*?</div>', re.S)
     pattern = re.compile('<script language="javascript".*?next_page = "(.*?)";var index_page.*?</script>', re.S)
 
@@ -89,5 +90,5 @@ def main(argv):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
-    # dump_book('/11_11668/', 'gold_eys.txt')
+    # main(sys.argv[1:])
+    dump_book('/31_31730/', 'library.txt')
