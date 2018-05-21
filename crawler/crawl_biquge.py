@@ -6,19 +6,24 @@ import sys, getopt
 import requests
 from lxml import etree
 
-base_biquge_url = 'http://www.biquge.info'
+# base_biquge_url = 'http://www.biquge.info'
+base_biquge_url = 'http://www.biqugexsw.com'
 
 
 def format_html(html):
     html = html.replace("&nbsp;", " ")
     html = html.replace("<br/>", "\n")
+    html = html.replace("<br />", "\n")
     return html
 
 
 def load_page(book_url, chapter_url):
     url = base_biquge_url + str(book_url) + str(chapter_url)
+    if chapter_url.__contains__(book_url):
+        url = base_biquge_url + str(chapter_url)
     response = requests.get(url)
-    content = str(response.content, "utf-8")
+    response.encoding = 'gbk'
+    content = str(response.text)
     # 正则表达式
     # text_pattern = re.compile('<div id="content">.*?<!--go-->(.*?)<!--over-->.*?</div>', re.S)
     text_pattern = re.compile('<div id="content">(.*?)</div>', re.S)
@@ -35,8 +40,8 @@ def load_page(book_url, chapter_url):
 def get_first_url(book_url):
     url = base_biquge_url + str(book_url)
     response = requests.get(url)
-    html = str(response.content, "utf-8")
-    selector = etree.HTML(html)
+    # html = str(response.content, "utf-8")
+    selector = etree.HTML(response.content)
     first_url = selector.xpath('//*[@id="list"]/dl/dd[1]/a/@href')[0]
     if first_url == '':
         print("开始页面获取失败")
@@ -91,4 +96,4 @@ def main(argv):
 
 if __name__ == "__main__":
     # main(sys.argv[1:])
-    dump_book('/31_31730/', 'library.txt')
+    dump_book('/71_71049/', 'xianzhu.txt', '14423858.html')
