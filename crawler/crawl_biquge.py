@@ -95,5 +95,5 @@ def main(argv):
 
 
 if __name__ == "__main__":
-    # main(sys.argv[1:])
-    dump_book('/71_71049/', 'xianzhu.txt', '14423858.html')
+    main(sys.argv[1:])
+    # dump_book('/71_71049/', 'xianzhu.txt', '14423858.html')
