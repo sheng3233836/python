@@ -26,7 +26,6 @@ def win32_learn():
     win32gui.PostMessage(wnhd, win32con.WM_CHAR, 'f', 0)
 
 
-
 def left_click(x=None, y=None):
     if x and y:
         win32api.SetCursorPos([x, y])
@@ -49,7 +48,6 @@ def autopy_bitmap_learn():
 def format_color(rgb_color):
     return hex(autopy.color.rgb_to_hex(rgb_color[0], rgb_color[1], rgb_color[2]))
 
-
 # left_click()
-win32_learn()
+# win32_learn()
 # autopy_bitmap_learn()
