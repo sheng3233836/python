@@ -7,6 +7,9 @@ from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
 
+jieba.set_dictionary("./dict.txt")
+jieba.initialize()
+
 aim_file_name = ""
 
 
@@ -21,6 +24,7 @@ def mapping():
     try:
         detail_result_dict = {}
         result_dict = {}
+        split_line_list = []
         if aim_file_name == "":
             messagebox.askokcancel('请先选择文件', '请先选择文件！请先选择文件！请先选择文件！')
         else:
@@ -28,6 +32,7 @@ def mapping():
                 logger.info(file.name + " 开始" + "自动分词" if var.get() == 1 else "手动分词")
                 for line in file.readlines():
                     if var.get() == 1:
+                        split_line_list.append("/".join(jieba.cut(line)))
                         line = " ".join(jieba.cut(line))
                     line = format_line(line)
                     for word in line:
@@ -39,7 +44,7 @@ def mapping():
                 logger.info(result_dict)
                 Label(root, text="单字匹配结果:" + str(result_dict['单字']), font='Helvetica -12 bold').place(y=185)  # 创建标签
                 Label(root, text="词语匹配结果:" + str(result_dict['词语']), font='Helvetica -12 bold').place(y=225)  # 创建标签
-                output_excel(result_dict, detail_result_dict)
+                output_excel(result_dict, detail_result_dict, split_line_list)
     except Exception:
         logger.error("报错啦！报错啦！", exc_info=1)
 
@@ -85,7 +90,7 @@ def format_line(line):
     return re.sub('[^\u4e00-\u9fff| *]', '', line)
 
 
-def output_excel(result_dict, detail_result_dict):
+def output_excel(result_dict, detail_result_dict, split_line_list):
     file_name = aim_file_name.split("/")[-1].split(".")[0]
     wb = xlwt.Workbook(encoding='gbk')
     for lib_str in ['单字', '词语']:
@@ -98,6 +103,12 @@ def output_excel(result_dict, detail_result_dict):
                 sheet.write(i, 1, word)
                 sheet.write(i, 2, detail_result_dict[lib_str][lib][word])
                 i += 1
+        if split_line_list != [] and lib_str == '词语':
+            sheet.write(0, 5, "分词结果如下('/'为分词符)：")
+            a = 1
+            for split_line in split_line_list:
+                sheet.write(a, 5, split_line)
+                a += 1
     wb.save(file_name + '_详情结果_' + time.strftime("%Y%m%d%H%M%S") + '.xls')
 
 
