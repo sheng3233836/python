@@ -15,24 +15,24 @@ def find_img_and_click(img, region, offset_x=0, offset_y=0, confidence=0.99):
 
 
 # 选定至游戏界面
-pag.click(600, 50)
+
 while True:
+    if line == 0: pag.click(1185, 430)
     pag.click(854, 408)
-    time.sleep(0.5)
+    time.sleep(1)
     # 自动换工具
     if pag.pixelMatchesColor(760, 362, (1, 219, 0)):
         pag.click(760, 342)
-    time.sleep(9)
+    time.sleep(8.5)
     # 遇到需要‘食用’道具
     find_img_and_click('eat_button.bmp', (900, 380, 1070, 520))
     # 遇到需要‘学习’道具
-    learn_center = find_img_and_click('learn_button.bmp', (900, 380, 1070, 520))
-    if learn_center:
-        # 可能已经学习，需点击‘确认’
-        time.sleep(0.5)
-        find_img_and_click('yes_button.bmp', (700, 500, 1000, 600))
+    find_img_and_click('learn_button.bmp', (900, 380, 1070, 520))
+    # 可能已经学习，需点击‘确认’
+    time.sleep(1)
+    find_img_and_click('yes_button.bmp', (700, 500, 1000, 600))
     # 换线
-    time.sleep(0.2)
+    time.sleep(0.5)
     # 点击所在线
     pag.click(1287, 60)
     time.sleep(0.5)
