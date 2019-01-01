@@ -2,7 +2,7 @@ import pyautogui as pag
 import time
 
 # 楚留香自动换线采集
-# 坐标点是取自：windows 7 分辨率1366*768 左侧任务栏 全屏
+# 坐标点是取自：windows 7 分辨率1366*768 右侧任务栏 全屏
 
 line = 0
 
@@ -25,12 +25,13 @@ while True:
         pag.click(760, 342)
     time.sleep(8.5)
     # 遇到需要‘食用’道具
-    find_img_and_click('eat_button.bmp', (900, 380, 1070, 520))
+    find_img_and_click('image/eat_button.bmp', (900, 380, 1070, 520))
     # 遇到需要‘学习’道具
-    find_img_and_click('learn_button.bmp', (900, 380, 1070, 520))
-    # 可能已经学习，需点击‘确认’
-    time.sleep(1)
-    find_img_and_click('yes_button.bmp', (700, 500, 1000, 600))
+    learn_center = find_img_and_click('image/learn_button.bmp', (900, 380, 1070, 520))
+    if learn_center:
+        # 可能已经学习，需点击‘确认’
+        time.sleep(0.5)
+        find_img_and_click('image/yes_button.bmp', (700, 500, 1000, 600))
     # 换线
     time.sleep(0.5)
     # 点击所在线
